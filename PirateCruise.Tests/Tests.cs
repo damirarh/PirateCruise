@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using PirateCruise;
+using System;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -36,6 +37,30 @@ namespace Tests
                 .ComparingByMembers<LatLng>()
                 .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.000001)).WhenTypeIs<double>()
             );
+        }
+
+        [Test]
+        public void WriteCsvFile()
+        {
+            var cacheData = new[]
+            {
+                new ProcessedCacheData(
+                    new CacheData("GC7WP8Y", new LatLng(43.550767, 16.51405), -23.896, 905.656),
+                    new LatLng(43.558220, 16.509510)
+                )
+            };
+
+            var csvWriter = new CsvFileWriter();
+
+            using (var writer = new StringWriter())
+            {
+                csvWriter.Write(cacheData, writer);
+                var csvString = writer.ToString();
+
+                var expected = "GC7WP8Y,43.55822,16.50951" + Environment.NewLine;
+
+                csvString.Should().Be(expected);
+            }
         }
     }
 }
