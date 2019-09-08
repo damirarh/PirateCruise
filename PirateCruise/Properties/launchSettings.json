@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "PirateCruise": {
+      "commandName": "Project",
+      "commandLineArgs": "-i PirateCruise.gpx -o PirateCruise.csv",
+      "workingDirectory": "C:\\Users\\Damir\\Temp\\PirateCruise"
+    }
+  }
+}
