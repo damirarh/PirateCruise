@@ -2,8 +2,6 @@
 {
     public class CacheData
     {
-        private CacheData cacheData;
-
         public string Code { get; }
         public LatLng OriginalCoords { get; }
         public double Bearing { get; }
