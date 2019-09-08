@@ -22,5 +22,20 @@ namespace Tests
             var expected = new CacheData("GC7WP8Y", new LatLng(43.550767, 16.51405), -23.896, 905.656);
             parsed.Should().BeEquivalentTo(expected);
         }
+
+        [Test]
+        public void ProcessCacheData()
+        {
+            var cacheData = new CacheData("GC7WP8Y", new LatLng(43.550767, 16.51405), -23.896, 905.656);
+            var processor = new CacheProcessor();
+
+            var processed = processor.Process(cacheData);
+
+            var expected = new ProcessedCacheData(cacheData, new LatLng(43.558220, 16.509510));
+            processed.Should().BeEquivalentTo(expected, options => options
+                .ComparingByMembers<LatLng>()
+                .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.000001)).WhenTypeIs<double>()
+            );
+        }
     }
 }
